@@ -2,13 +2,20 @@ package pessoa;
 
 public class Pessoa {
     private String nome;
+    private String endereco;
     private String CPF;
     private String RG;
     private String genero;
+    private String telefone;
     private int idade;
+    private String tipoTelefone;
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     public void setCPF(String CPF) {
@@ -23,12 +30,24 @@ public class Pessoa {
         this.genero = genero.toUpperCase();
     }
 
+    public void setTipoTelefone(String tipoTelefone) {
+        this.tipoTelefone = tipoTelefone.toUpperCase();
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     public void setIdade(int idade) {
         this.idade = idade;
     }
 
     public String getNome() {
         return this.nome;
+    }
+
+    public String getEndereco() {
+        return this.endereco;
     }
 
     public String getCPF() {
@@ -40,7 +59,27 @@ public class Pessoa {
     }
 
     public String getGenero() {
-        return this.genero;
+        return this.genero.equals("M") ? "Masculino" : "Feminino";
+    }
+
+    public String getTipoTelefone() {
+        String tipo = "";
+        switch(this.tipoTelefone) {
+            case "R":
+                tipo = "Residencial";
+            break;
+            case "C":
+                tipo = "Celular";
+            break;
+            case "T":
+                tipo = "Trabalho";
+            break;
+        }
+        return tipo;
+    }
+
+    public String getTelefone() {
+        return this.telefone;
     }
 
     public int getIdade() {
@@ -53,7 +92,13 @@ public class Pessoa {
         }
     }
 
-    public void validarIdade(int idade) throws Exception{
+    public void validarTipoTelefone(String tipoTelefone) throws Exception {
+        if(!tipoTelefone.equalsIgnoreCase("T") && !tipoTelefone.equalsIgnoreCase("R") && !tipoTelefone.equalsIgnoreCase("C")) {
+            throw new Exception("Tipo do telefone inválido, digite uma opção entre C, R ou T");
+        }
+    }
+
+    public void validarIdade(int idade) throws Exception {
         if(idade <= 0) {
             throw new Exception("Idade deve ser maior que zero");
         }
@@ -62,6 +107,12 @@ public class Pessoa {
     public void validarCPF(String CPF) throws Exception {
         if(!CPF.matches("^((\\d{3})\\.){2}(\\d{3})-(\\d{2})$")) {
             throw new Exception("Formato do CPF inválido");
+        }
+    }
+
+    public void validarTelefone(String telefone) throws Exception {
+        if(!telefone.matches("^(\\(\\d{2}\\))?(\\d{3})-(\\d{4})$")) {
+            throw new Exception("Formato do telefone inválido");
         }
     }
 }

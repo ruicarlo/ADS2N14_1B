@@ -10,12 +10,20 @@ public class cadastrarPessoa {
     public static void main(String[] args) {
 
         String nome;
+        String endereco;
         String RG;
         
         String CPF;
         boolean CPFValidado = false;
+        
         String genero;
         boolean generoValidado = false;
+
+        String tipoTelefone;
+        boolean tipoTelefoneValidado = false;
+
+        String telefone;
+        boolean telefoneValidado = false;
         
         int idade;
         boolean idadeValidada = false;
@@ -26,6 +34,10 @@ public class cadastrarPessoa {
         out.print("Digite seu nome: ");
         nome = ler.next();
         pessoa.setNome(nome);
+
+        out.print("Digite seu endereço: ");
+        endereco = ler.next();
+        pessoa.setEndereco(endereco);
 
         out.print("Digite seu RG: ");
         RG = ler.next();
@@ -69,11 +81,37 @@ public class cadastrarPessoa {
                 out.println(e.getMessage());
             }
         } while(!idadeValidada);
-        
+
+        do {
+            try {
+                out.print("Qual telefone quer informar, escolha uma opção: R = Residencial, C = Celular, T = Trabalho: ");
+                tipoTelefone = ler.next();
+                pessoa.validarTipoTelefone(tipoTelefone);
+                pessoa.setTipoTelefone(tipoTelefone);
+                tipoTelefoneValidado = true;
+            } catch(Exception Excecao) {
+                out.println(Excecao.getMessage());
+            }
+        } while(!tipoTelefoneValidado);
+
+        do {
+            try {
+                out.print("Digite seu telefone:");
+                telefone  = ler.next();
+                pessoa.validarTelefone(telefone);
+                pessoa.setTelefone(telefone);
+                telefoneValidado = true;
+            } catch(Exception e) {
+                out.println(e.getMessage());
+            }
+        } while(!telefoneValidado);
+
         out.println("Nome: " + pessoa.getNome());
+        out.println("Endereço: " + pessoa.getEndereco());
         out.println("CPF: " + pessoa.getCPF());
         out.println("RG: " + pessoa.getRG());
         out.println("Genero: " + pessoa.getGenero());
         out.println("Idade: " + pessoa.getIdade());
+        out.println("Telefone: " + pessoa.getTipoTelefone() + " " + pessoa.getTelefone());
     }    
 }
