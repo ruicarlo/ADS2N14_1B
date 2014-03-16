@@ -1,4 +1,4 @@
-package pessoa;
+package pessoa.model;
 
 public class Pessoa {
     private String nome;
