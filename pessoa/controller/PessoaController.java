@@ -173,11 +173,13 @@ public class PessoaController {
 
     private String getNomeAleatorio() {
         String nomes[] = {"MIGUEL","GABRIEL","LUCAS","GUSTAVO","FELIPE","ENZO","JOÃO PEDRO","CAUÃ","EDUARDO","HENRIQUE","VINICIUS","PIETRO","LEONARDO","HEITOR","ISAAC","THIAGO","JOÃO","BRUNO","CARLOS EDUARDO","BRENO","RYAN","YURI","ERICK","FERNANDO","ANDRÉ","LÍVIA","HELENA","LORENA","LARISSA","HELOISA","MELISSA","EDUARDA","REBECA","ALÍCIA","LAVÍNIA","ESTER","EMILY","CECÍLIA","PIETRA","MILENA","LAÍS","MARIA","CAMILA","ANA LAURA","MARIA VITÓRIA","OLIVIA","MIRELLA","STELLA","STEFANY","ISABEL"};
-        return nomes[gerador.nextInt(nomes.length)]; 
+        int aleatorio = this.gerador.nextInt(nomes.length);
+        return nomes[aleatorio]; 
     }
 
     private String getSobrenomeAleatorio() {
         String sobrenomes[] = {"ABROMOVIZT","ABROMOVIZT FILHO","ABUEEAR","AGUIAR","AHID","GASPAROTO","ALBERS","ALBERT","ALBERTON","ALBINO","ALENCAR","ALFARO","ALFLEN","ALLEIN","ALMEIDA","ALTENBURG","ALTHOFF","ALVES","ALVES PANTOJA","AMARAL","AMBRÓSIO","AMORIM","AMORIM NETO","ANDRADE","ANDRADE FILHO","AZAMBUJA","BACKES","BADO","BALDESSIN","BALTAZAR","BAPTISTA","BARBOSA","BARDEN","BARDINI","BARNI","BARRA","BARRETO","BARRETO FILHO","BARROS","BARTH","BARTHES","BASON","BASTOS","BATISTA","BAUMER","BAUNGARTEN","BAYER","BECHER","BIANCHINI","BIANKM"};
-        return sobrenomes[gerador.nextInt(sobrenomes.length)]; 
+        int aleatorio = this.gerador.nextInt(sobrenomes.length);
+        return sobrenomes[aleatorio];
     }
 }
