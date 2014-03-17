@@ -42,7 +42,7 @@ public class PessoaController {
     }
     
     public void gerarCadastroAleatorioT2() {
-        String nomeAleatorio = getNomeAleatorio() + " " + getSobrenomeAleatorio();
+        String nomeAleatorio = this.getNomeAleatorio() + " " + this.getSobrenomeAleatorio();
         for(int i = 0; i < 50; i++) {
             this.cadastrarPessoaT2(nomeAleatorio, this.gerarTelefoneAleatorioT2());
             this.view.imprimeDadosPessoa(this.pessoa.getNome(), this.pessoa.getTelefone());        
