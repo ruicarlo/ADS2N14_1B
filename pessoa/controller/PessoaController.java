@@ -32,20 +32,21 @@ public class PessoaController {
     private boolean telefoneValidado;
     private boolean idadeValidada;
     
-    public void cadastrarPessoaT2(String nome, String telefone) {
-        this.pessoa.setNome(nome);
-        this.pessoa.setTelefone(telefone);
-    }
 
     public String gerarTelefoneAleatorioT2() {
         return (this.gerador.nextInt(1000-100)+100) + "-" + (this.gerador.nextInt(10000-1000)+1000);
     }
     
     public void gerarCadastroAleatorioT2() {
-        String nomeAleatorio = this.getNomeAleatorio() + " " + this.getSobrenomeAleatorio();
         for(int i = 0; i < 50; i++) {
-            this.cadastrarPessoaT2(nomeAleatorio, this.gerarTelefoneAleatorioT2());
-            this.view.imprimeDadosPessoa(this.pessoa.getNome(), this.pessoa.getTelefone());        
+            String nomeAleatorio     = this.getNomeAleatorio() + " " + this.getSobrenomeAleatorio();
+            String enderecoAleatorio = this.getEnderecoAleatorio();
+            String telefoneAleatorio = this.gerarTelefoneAleatorioT2();
+            
+            this.pessoa.setNome(nomeAleatorio);
+            this.pessoa.setTelefone(telefoneAleatorio);
+            this.pessoa.setEndereco(enderecoAleatorio);              
+            this.view.imprimeDadosPessoa(this.pessoa.getNome(), this.pessoa.getTelefone(), this.pessoa.getEndereco());        
         }
     }
 
@@ -181,5 +182,11 @@ public class PessoaController {
         String sobrenomes[] = {"ABROMOVIZT","ABROMOVIZT FILHO","ABUEEAR","AGUIAR","AHID","GASPAROTO","ALBERS","ALBERT","ALBERTON","ALBINO","ALENCAR","ALFARO","ALFLEN","ALLEIN","ALMEIDA","ALTENBURG","ALTHOFF","ALVES","ALVES PANTOJA","AMARAL","AMBRÓSIO","AMORIM","AMORIM NETO","ANDRADE","ANDRADE FILHO","AZAMBUJA","BACKES","BADO","BALDESSIN","BALTAZAR","BAPTISTA","BARBOSA","BARDEN","BARDINI","BARNI","BARRA","BARRETO","BARRETO FILHO","BARROS","BARTH","BARTHES","BASON","BASTOS","BATISTA","BAUMER","BAUNGARTEN","BAYER","BECHER","BIANCHINI","BIANKM"};
         int aleatorio = this.gerador.nextInt(sobrenomes.length);
         return sobrenomes[aleatorio];
+    }
+
+    private String getEnderecoAleatorio() {
+        String enderecos[] = {"RUA MARQUÊS DO HERVAL","RUA DINARTE RIBEIRO","RUA ENGENHEIRO ÁLVARO NUNES PEREIRA","RUA SANTO INÁCIO","RUA BARÃO DE SANTO ÂNGELO","RUA LUCIANA DE ABREU","AVENIDA PROTÁSIO ALVES","AVENIDA IPIRANGA","AVENIDA WENCESLAU ESCOBAR"};
+        int aleatorio = this.gerador.nextInt(enderecos.length);
+        return enderecos[aleatorio] + ", " + this.gerador.nextInt(9999);
     }
 }

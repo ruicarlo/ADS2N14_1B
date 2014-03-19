@@ -13,7 +13,7 @@ public class PessoaView {
         out.println("Telefone: " + telefone);
     }
 
-    public void imprimeDadosPessoa(String nome, String telefone) {
-        out.println("Nome: " + nome + ", " + "telefone: " + telefone);
+    public void imprimeDadosPessoa(String nome, String telefone, String endereco) {
+        out.println("Nome: " + nome + ", " + "telefone: " + telefone + " Endereço: " + endereco);
     }
 }
