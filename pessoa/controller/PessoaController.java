@@ -38,16 +38,14 @@ public class PessoaController {
     }
     
     public void gerarCadastroAleatorioT2() {
-        for(int i = 0; i < 50; i++) {
-            String nomeAleatorio     = this.getNomeAleatorio() + " " + this.getSobrenomeAleatorio();
-            String enderecoAleatorio = this.getEnderecoAleatorio();
-            String telefoneAleatorio = this.gerarTelefoneAleatorioT2();
-            
-            this.pessoa.setNome(nomeAleatorio);
-            this.pessoa.setTelefone(telefoneAleatorio);
-            this.pessoa.setEndereco(enderecoAleatorio);              
-            this.view.imprimeDadosPessoa(this.pessoa.getNome(), this.pessoa.getTelefone(), this.pessoa.getEndereco());        
-        }
+        String nomeAleatorio     = this.getNomeAleatorio() + " " + this.getSobrenomeAleatorio();
+        String enderecoAleatorio = this.getEnderecoAleatorio();
+        String telefoneAleatorio = this.gerarTelefoneAleatorioT2();
+
+        this.pessoa.setNome(nomeAleatorio);
+        this.pessoa.setTelefone(telefoneAleatorio);
+        this.pessoa.setEndereco(enderecoAleatorio);              
+        this.view.imprimeDadosPessoa(this.pessoa.getNome(), this.pessoa.getTelefone(), this.pessoa.getEndereco());
     }
 
     public void lerPessoa() {

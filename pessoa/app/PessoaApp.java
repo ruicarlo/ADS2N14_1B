@@ -6,7 +6,9 @@ public class PessoaApp {
 
     public static void main(String[] args) {
         PessoaController pessoa = new PessoaController();
-        pessoa.gerarCadastroAleatorioT2();
+        for(int i = 0; i < 50; i++) {
+            pessoa.gerarCadastroAleatorioT2();
+        }
     }
     
 }
