@@ -35,7 +35,7 @@ public class JogoController {
     }
 
     public void jogada() {
-        view.imprimirSelecionarComando(posicaoJogador+1);
+        view.imprimirSelecionarComando(posicaoJogador);
         String comando = view.lerComando();
         if(executarComandoJogador(comando)) {
             if(cartaJogador != null) {
@@ -48,7 +48,7 @@ public class JogoController {
     }
 
     public void pularVezJogador() {
-        jogo.getJogador(posicaoJogador).subtractPontos(10);
+        jogo.getJogador(posicaoJogador).subtractPontos(2);
     }
 
     public void playTurno() {
@@ -76,10 +76,10 @@ public class JogoController {
 
     public boolean executarComandoJogador(String comando) {
         comando = comando.equalsIgnoreCase("JOGAR") ? "JOGAR" : "PULAR";
-        setPosicaoJogador(posicaoJogador+1);
+        
         
         if(comando.equals("PULAR") && jogo.getJogador(posicaoJogador).getUltimoComando().equals("PULAR")) {
-            setPosicaoJogador(posicaoJogador-1);
+            //setPosicaoJogador(posicaoJogador-1);
             return false;
         } else if(comando.equalsIgnoreCase("JOGAR")) {
             this.setCartaJogador();
@@ -87,7 +87,13 @@ public class JogoController {
             this.pularVezJogador();
         }
         jogo.getJogador(posicaoJogador).setUltimoComando(comando);
+        setPosicaoJogador(posicaoJogador+1);
         return true;
+    }
+    
+    public void decretarGanhador() {
+        int[] ganhador = jogo.getGanhador();
+        view.imprimirGanhador(ganhador[0], ganhador[1]);
     }
             
 }

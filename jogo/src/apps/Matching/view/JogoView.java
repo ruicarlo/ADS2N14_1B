@@ -15,7 +15,8 @@ public class JogoView {
     }
 
     public void imprimirSelecionarComando(int posicao) {
-        out.print(String.format("Jogador %d. Digite 'jogar' para jogar, 'pular' para passar a vez: ", posicao));
+        //out.print(String.format("Jogador %d. Digite 'jogar' para jogar, 'pular' para passar a vez: ", posicao));
+        out.print(String.format("Jogador %d. Digite 'jogar' ou 'pular': ", posicao));
     }
 
     public void imprimirCartaJogador(String cartaJogador) {
@@ -28,5 +29,9 @@ public class JogoView {
     
     public void imprimirMensagemComandoRepetido() {
         out.println("Você não pode pular novamente");
+    }
+    
+    public void imprimirGanhador(int posicao, int pontos) {
+        out.println(String.format("O ganhador foi o jogador %d com %d ponto(s)", posicao, pontos));
     }
 }

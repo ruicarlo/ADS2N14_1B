@@ -7,6 +7,7 @@ public class Jogar {
         do {    
             controller.jogada();
         } while(controller.verificarSeTemCarta());
+        controller.decretarGanhador();
     }
     
 }

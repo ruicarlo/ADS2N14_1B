@@ -54,4 +54,21 @@ public class MatchingCardGame {
     public Jogador getJogador(int posicaoJogador) {
         return jogador[posicaoJogador];
     }
+    
+    public int[] getGanhador() {
+        int posicaoGanhador = 0;
+        int pontosGanhador = getJogador(0).getPontos();
+        int pontos;
+        
+        for (int posicao = 0; posicao < getNumeroJogadores(); posicao++) {
+            pontos = getJogador(posicao).getPontos();
+            System.out.println("posicao: "+posicao+" pontos: "+pontos);
+            if ( pontos > pontosGanhador) {
+                pontosGanhador  = pontos;
+                posicaoGanhador = posicao;
+            }
+        }
+        int[] ganhador = {posicaoGanhador, pontosGanhador};
+        return ganhador;
+    }
 }
