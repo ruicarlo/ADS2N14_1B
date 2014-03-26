@@ -1,8 +1,8 @@
-package com.senac.jogos.apps.Matching.model;
+package apps.Matching.model;
 
-import com.senac.jogos.Jogador;
-import com.senac.jogos.cartas.Baralho;
-import com.senac.jogos.cartas.Carta;
+import jogo.Jogador;
+import cartas.Baralho;
+import cartas.Carta;
 
 public class MatchingCardGame {
     private Baralho baralho;
@@ -16,8 +16,8 @@ public class MatchingCardGame {
     }
 
     private void iniciarJogadores() {
-        for(int i=0;i<jogador.length;i++) {
-            jogador[i]=new Jogador();
+        for(int i=0; i<jogador.length; i++) {
+            jogador[i] = new Jogador();
         }
     }
 
@@ -62,7 +62,6 @@ public class MatchingCardGame {
         
         for (int posicao = 0; posicao < getNumeroJogadores(); posicao++) {
             pontos = getJogador(posicao).getPontos();
-            System.out.println("posicao: "+posicao+" pontos: "+pontos);
             if ( pontos > pontosGanhador) {
                 pontosGanhador  = pontos;
                 posicaoGanhador = posicao;

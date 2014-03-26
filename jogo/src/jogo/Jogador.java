@@ -1,4 +1,4 @@
-package com.senac.jogos;
+package jogo;
 
 public class Jogador {
 	

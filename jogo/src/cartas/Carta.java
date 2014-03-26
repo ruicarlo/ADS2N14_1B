@@ -1,4 +1,4 @@
-package com.senac.jogos.cartas;
+package cartas;
 
 public class Carta {
     private char naipe;

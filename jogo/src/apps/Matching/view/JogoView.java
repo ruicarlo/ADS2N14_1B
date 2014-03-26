@@ -1,4 +1,4 @@
-package com.senac.jogos.apps.Matching.view;
+package apps.Matching.view;
 
 import java.util.Scanner;
 import static java.lang.System.*;
@@ -28,7 +28,7 @@ public class JogoView {
     }
     
     public void imprimirMensagemComandoRepetido() {
-        out.println("Você não pode pular novamente");
+        out.println("Vocï¿½ nï¿½o pode pular novamente");
     }
     
     public void imprimirGanhador(int posicao, int pontos) {

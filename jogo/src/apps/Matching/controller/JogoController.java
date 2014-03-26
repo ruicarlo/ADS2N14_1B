@@ -1,8 +1,8 @@
-package com.senac.jogos.apps.Matching.controller;
+package apps.Matching.controller;
 
-import com.senac.jogos.apps.Matching.model.MatchingCardGame;
-import com.senac.jogos.apps.Matching.view.JogoView;
-import com.senac.jogos.cartas.Carta;
+import apps.Matching.model.MatchingCardGame;
+import apps.Matching.view.JogoView;
+import cartas.Carta;
 
 public class JogoController {
 
@@ -35,13 +35,14 @@ public class JogoController {
     }
 
     public void jogada() {
-        view.imprimirSelecionarComando(posicaoJogador);
+        view.imprimirSelecionarComando(posicaoJogador+1);
         String comando = view.lerComando();
         if(executarComandoJogador(comando)) {
             if(cartaJogador != null) {
                 view.imprimirCartaJogador(showCarta(cartaJogador));
             }
             view.imprimirPontosJogador(showJogador());
+            setPosicaoJogador(posicaoJogador+1);
         } else {
             view.imprimirMensagemComandoRepetido();
         }
@@ -58,7 +59,7 @@ public class JogoController {
     }
     
     public String showJogador() {
-        return String.format("Pontos: %d", jogo.getJogador(posicaoJogador).getPontos());
+        return String.format("%d", jogo.getJogador(posicaoJogador).getPontos());
     }
 	
     private String showCarta(Carta carta) {
@@ -79,7 +80,6 @@ public class JogoController {
         
         
         if(comando.equals("PULAR") && jogo.getJogador(posicaoJogador).getUltimoComando().equals("PULAR")) {
-            //setPosicaoJogador(posicaoJogador-1);
             return false;
         } else if(comando.equalsIgnoreCase("JOGAR")) {
             this.setCartaJogador();
@@ -87,13 +87,12 @@ public class JogoController {
             this.pularVezJogador();
         }
         jogo.getJogador(posicaoJogador).setUltimoComando(comando);
-        setPosicaoJogador(posicaoJogador+1);
         return true;
     }
     
     public void decretarGanhador() {
         int[] ganhador = jogo.getGanhador();
-        view.imprimirGanhador(ganhador[0], ganhador[1]);
+        view.imprimirGanhador((ganhador[0]+1), ganhador[1]);
     }
             
 }
