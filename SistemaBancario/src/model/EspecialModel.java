@@ -3,11 +3,10 @@ package model;
 import Exception.SaldoInsuficienteException;
 
 public class EspecialModel extends ContaModel {
-    private double limite;
+    private double limite = 0;
 
-    public EspecialModel(int numConta, int numVerificacao, double limite) throws Exception {
+    public EspecialModel(int numConta, int numVerificacao) throws Exception {
         super(numConta, numVerificacao);
-        this.setLimite(limite);
     }
 
     public double getLimite() {
