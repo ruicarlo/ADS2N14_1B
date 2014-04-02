@@ -40,13 +40,13 @@ public class ContaModel {
 
     private void validarNumConta(int numConta) throws Exception {
         if(numConta < 1) {
-            throw new Exception("Número de conta inválido.");
+            throw new Exception("Numero de conta invï¿½lido.");
         }
     }
 
-    private void validarNumVerificacao(int numVerificacao) throws Exception {
+    public void validarNumVerificacao(int numVerificacao) throws Exception {
         if(numVerificacao < 0) {
-            throw new Exception("Número de verificação inválido.");
+            throw new Exception("Numero de verificacao invalido.");
         }
     }
 
@@ -64,7 +64,7 @@ public class ContaModel {
 
     private void validarValorSaque(double valor) throws Exception {
         if(valor <= 0) {
-            throw new Exception("Valor inválido para saque.");
+            throw new Exception("Valor invalido para saque.");
         }
     }
     
@@ -75,7 +75,7 @@ public class ContaModel {
 
     private void validarValorDeposito(double valor) throws Exception {
         if(valor <= 0) {
-            throw new Exception("Valor inválido para depósito.");
+            throw new Exception("Valor invalido para depï¿½sito.");
         }
     }
 }

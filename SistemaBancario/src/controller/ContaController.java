@@ -5,82 +5,51 @@ import model.EspecialModel;
 import view.ContaView;
 
 public class ContaController {
-    private ContaModel    contaNormal;
-    private EspecialModel contaEspecial;
-    private ContaView     view    = new ContaView();;
-    private char          tpConta = 'N';
-
+    private ContaModel conta;
+    private ContaView  view;
     
     public ContaController() throws Exception {
+        this.view = new ContaView();
         this.criarConta();
     }
-    private void criarConta() throws Exception {
-        int numConta; 
-        int numVerificacao;
-        char tipoConta;
 
-        this.view.imprimirSelecioneTipoConta();
-        tipoConta = this.view.lerTipoConta().charAt(0);
-        
-        this.view.imprimirDigiteNumeroConta();
-        numConta = this.view.lerNumeroConta();
-        
-        this.view.imprimirDigiteNumeroVerificacao();
-        numVerificacao = this.view.lerNumeroVerificacao();
+    private void criarConta() throws Exception {
+        char tipoConta     = this.view.lerTipoConta();
+        int numConta       = this.view.lerNumeroConta();
+        int numVerificacao = this.view.lerNumeroVerificacao();
         
         switch(tipoConta) {
             case 'E':
-                this.criarContaEspecial(numConta, numVerificacao);
-                this.tpConta = 'E';
+            case 'e':
+                this.conta = new EspecialModel(numConta, numVerificacao);
+                ((EspecialModel) this.conta).setLimite(1000);
                 break;
             default:
-                this.criarContaNormal(numConta, numVerificacao);
-                this.tpConta = 'N';
+                this.conta = new ContaModel(numConta, numVerificacao); 
         }
-    }
-
-    private void criarContaEspecial(int numConta, int numVerificacao) throws Exception {
-        this.contaEspecial = new EspecialModel(numConta, numVerificacao);
-        this.contaEspecial.setLimite(1000);
-    }
-
-    private void criarContaNormal(int numConta, int numVerificacao) throws Exception {
-        this.contaNormal = new ContaModel(numConta, numVerificacao);    
+        this.view.lerComando();
+        System.out.println(
+            this.view.lerValorSaqueDeposito()
+        );
     }
 
     public void imprimirSaldo() {
-        this.view.imprimirSaldo(this.getSaldo());
+        this.view.imprimirSaldo(this.conta.getSaldo());
     }
 
     public void imprimirLimite() {
-        this.view.imprimirLimite(this.contaEspecial.getLimite());
+        this.view.imprimirLimite(((EspecialModel) this.conta).getLimite());
     }
 
     public void depositar(double valor) throws Exception {
-        switch(tpConta) {
-            case 'E':
-                this.contaEspecial.depositar(valor);
-            break;
-            default:
-                this.contaNormal.depositar(valor);
-        }
+        this.conta.depositar(valor);
         this.view.imprimirDadosDeposito(valor);
         this.imprimirSaldo();
     }
 
     public void sacar(double valor) throws Exception {
-        switch(tpConta) {
-            case 'E':
-                this.contaEspecial.sacar(valor);
-            break;
-            default:
-                this.contaNormal.sacar(valor);
-        }
+        this.conta.sacar(valor);
         this.view.imprimirDadosSaque(valor);
         this.imprimirSaldo();
-    }
-
-    public double getSaldo() {
-        return tpConta == 'E' ? this.contaEspecial.getSaldo() : this.contaNormal.getSaldo();
     }
 }
