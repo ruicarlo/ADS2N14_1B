@@ -27,10 +27,25 @@ public class ContaController {
             default:
                 this.conta = new ContaModel(numConta, numVerificacao); 
         }
-        this.view.lerComando();
-        System.out.println(
-            this.view.lerValorSaqueDeposito()
-        );
+    }
+
+    public void executarComando() throws Exception {
+        char comando = Character.toUpperCase(this.view.lerComando());
+        double valor = 0;
+
+        switch(comando) {
+            case 'D':
+                valor = this.view.lerValorSaqueDeposito();
+                this.depositar(valor);
+            break;
+            case 'S':
+                valor = this.view.lerValorSaqueDeposito();
+                this.sacar(valor);
+            break;
+            case 'I':
+                this.imprimirSaldo();
+            break;
+        }
     }
 
     public void imprimirSaldo() {

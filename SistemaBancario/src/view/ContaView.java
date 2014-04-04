@@ -35,7 +35,7 @@ public class ContaView {
     }
 
     public void imprimirSelecioneComando() {
-        System.out.print("Selecione um comando (D para Deposito, S para Saque, outra tecla para sair): ");
+        System.out.print("Selecione um comando (D para Deposito, S para Saque, I para imprimir saldo, outra tecla para sair): ");
     }
 
     public void imprimirDigiteValor() {
@@ -107,21 +107,14 @@ public class ContaView {
     }
 
     public char lerComando() {
-        char comando   = 'O';
+        char comando   = 'Q';
         boolean validado = false;
 
         do {
             try {
                 this.imprimirSelecioneComando();
-                comando = this.ler.next().charAt(0);
-                switch(comando) {
-                    case 'D':
-                    case 'S':
-                    case 's':
-                    case 'd':
-                        validado = true;
-                    break;
-                }
+                comando = Character.toUpperCase(this.ler.next().charAt(0));
+                validado = true;
             } catch(InputMismatchException e) {
                 System.out.println("Comando invalido");
                 this.setLer();
@@ -133,16 +126,15 @@ public class ContaView {
     }
 
     public double lerValorSaqueDeposito() {
-        double valor   = 'O';
+        double valor   = 0;
         boolean validado = false;
 
         do {
             try {
                 this.imprimirDigiteValor();
-                valor = this.ler.nextFloat();
-                validado = false;
+                valor = this.ler.nextDouble();
+                validado = true;
             } catch(InputMismatchException e) {
-                System.out.println(e.getMessage());
                 System.out.println("Valor invalido");
                 this.setLer();
             } catch(Exception e) {
