@@ -5,10 +5,12 @@ import controller.ContaController;
 public class Banco {
 
     public static void main(String[] args) {
+        boolean sair;
         try {
             ContaController conta = new ContaController();
-            conta.executarComando();
-            conta.executarComando();
+            do {
+                sair = conta.executarComando();
+            } while(sair);
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }

@@ -14,12 +14,20 @@ public class ContaView {
         this.ler = new Scanner(System.in);
     }
 
+    public String getMsgSaldoAtual(double saldo) {
+        return String.format("Saldo atual da conta R$ %1$,.2f", saldo);
+    }
+
     public void imprimirSaldo(double saldo) {
-        System.out.println(String.format("Saldo atual da conta R$ %1$,.2f", saldo));
+        System.out.println(this.getMsgSaldoAtual(saldo));
+    }
+
+    public String getMsgLimiteConta(double limite) {
+        return String.format("Limite atual da conta R$ %1$,.2f", limite);
     }
 
     public void imprimirLimite(double limite) {
-        System.out.println(String.format("Limite atual da conta R$ %1$,.2f", limite));
+        System.out.println(this.getMsgLimiteConta(limite));
     }
 
     public void imprimirSelecioneTipoConta() {
@@ -144,11 +152,19 @@ public class ContaView {
         return valor;
     }
 
+    public String getMsgDadosDeposito(double valor) {
+        return String.format("Realizado Deposito de R$ %1$,.2f", valor);
+    }
+
     public void imprimirDadosDeposito(double valor) {
-        System.out.println(String.format("Realizado Deposito de R$ %1$,.2f", valor));
+        System.out.println(this.getMsgDadosDeposito(valor));
+    }
+
+    public String getMsgDadosSaque(double valor) {
+        return String.format("Realizado Saque de R$ %1$,.2f", valor);
     }
 
     public void imprimirDadosSaque(double valor) {
-        System.out.println(String.format("Realizado Saque de R$ %1$,.2f", valor));
+        System.out.println(this.getMsgDadosSaque(valor));
     }
 }

@@ -14,22 +14,21 @@ public class ContaController {
     }
 
     private void criarConta() throws Exception {
-        char tipoConta     = this.view.lerTipoConta();
+        char tipoConta     = Character.toUpperCase(this.view.lerTipoConta());
         int numConta       = this.view.lerNumeroConta();
         int numVerificacao = this.view.lerNumeroVerificacao();
         
         switch(tipoConta) {
             case 'E':
-            case 'e':
                 this.conta = new EspecialModel(numConta, numVerificacao);
                 ((EspecialModel) this.conta).setLimite(1000);
-                break;
+            break;
             default:
                 this.conta = new ContaModel(numConta, numVerificacao); 
         }
     }
 
-    public void executarComando() throws Exception {
+    public boolean executarComando() throws Exception {
         char comando = Character.toUpperCase(this.view.lerComando());
         double valor = 0;
 
@@ -37,15 +36,20 @@ public class ContaController {
             case 'D':
                 valor = this.view.lerValorSaqueDeposito();
                 this.depositar(valor);
+                this.view.imprimirDadosDeposito(valor);
             break;
             case 'S':
                 valor = this.view.lerValorSaqueDeposito();
                 this.sacar(valor);
+                this.view.imprimirDadosSaque(valor);
             break;
             case 'I':
                 this.imprimirSaldo();
             break;
+            default:    
+                return false;
         }
+        return true;
     }
 
     public void imprimirSaldo() {
@@ -58,13 +62,9 @@ public class ContaController {
 
     public void depositar(double valor) throws Exception {
         this.conta.depositar(valor);
-        this.view.imprimirDadosDeposito(valor);
-        this.imprimirSaldo();
     }
 
     public void sacar(double valor) throws Exception {
         this.conta.sacar(valor);
-        this.view.imprimirDadosSaque(valor);
-        this.imprimirSaldo();
     }
 }
