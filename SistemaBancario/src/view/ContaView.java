@@ -31,7 +31,7 @@ public class ContaView {
     }
 
     public void imprimirSelecioneTipoConta() {
-        System.out.print("Selecione o tipo de conta (N para normal, E para Especial): ");
+        System.out.print("Selecione o tipo de conta (N para normal, E para Especial, I para Investimento): ");
     }
 
     public void imprimirDigiteNumeroConta() {
@@ -43,11 +43,15 @@ public class ContaView {
     }
 
     public void imprimirSelecioneComando() {
-        System.out.print("Selecione um comando (D para Deposito, S para Saque, I para imprimir saldo, outra tecla para sair): ");
+        System.out.print("Selecione um comando (D para Deposito, S para Saque, I para investimento, R para imprimir saldo, outra tecla para sair): ");
     }
 
     public void imprimirDigiteValor() {
         System.out.print("Digite o valor: ");
+    }
+
+    public void imprimirDigiteTaxa() {
+        System.out.print("Digite a taxa de investimento: ");
     }
 
     public char lerTipoConta() {
@@ -58,11 +62,11 @@ public class ContaView {
             try {
                 this.imprimirSelecioneTipoConta();
                 tipoConta = this.ler.next().charAt(0);
+                tipoConta = Character.toUpperCase(tipoConta);
                 switch(tipoConta) {
                     case 'N':
                     case 'E':
-                    case 'n':
-                    case 'e':
+                    case 'I':
                         validado = true;
                     break;
                 }
@@ -150,6 +154,25 @@ public class ContaView {
             }
         } while(!validado);
         return valor;
+    }
+
+    public double lerTaxaInvestimento() {
+        double taxa   = 0;
+        boolean validado = false;
+
+        do {
+            try {
+                this.imprimirDigiteTaxa();
+                taxa = this.ler.nextDouble();
+                validado = true;
+            } catch(InputMismatchException e) {
+                System.out.println("Valor invalido");
+                this.setLer();
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } while(!validado);
+        return taxa;
     }
 
     public String getMsgDadosDeposito(double valor) {

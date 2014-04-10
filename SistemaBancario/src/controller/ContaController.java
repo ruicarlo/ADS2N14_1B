@@ -2,6 +2,7 @@ package controller;
 
 import model.ContaModel;
 import model.EspecialModel;
+import model.InvestimentoModel;
 import view.ContaView;
 
 public class ContaController {
@@ -19,6 +20,9 @@ public class ContaController {
         int numVerificacao = this.view.lerNumeroVerificacao();
         
         switch(tipoConta) {
+            case 'I':
+                this.conta = new InvestimentoModel(numConta, numVerificacao);
+            break;
             case 'E':
                 this.conta = new EspecialModel(numConta, numVerificacao);
                 ((EspecialModel) this.conta).setLimite(1000);
@@ -31,6 +35,7 @@ public class ContaController {
     public boolean executarComando() throws Exception {
         char comando = Character.toUpperCase(this.view.lerComando());
         double valor = 0;
+        
 
         switch(comando) {
             case 'D':
@@ -44,6 +49,10 @@ public class ContaController {
                 this.view.imprimirDadosSaque(valor);
             break;
             case 'I':
+                double taxa = view.lerTaxaInvestimento();
+                ((InvestimentoModel) this.conta).dividendos(taxa);
+            break;
+            case 'R':
                 this.imprimirSaldo();
             break;
             default:    
