@@ -46,6 +46,11 @@ public class PessoaController {
     }
 
     public void armazenarPessoaNoArquivo(int numeroPessoas) {
+        File f = new File(this.nomeArquivoContatos);
+        if(f.exists()) {
+            return;
+        }
+
         DataOutputStream out = null;
         try {
             out = new DataOutputStream(
@@ -74,6 +79,11 @@ public class PessoaController {
     }
 
     public void armazenarContasNoArquivo(int numeroPessoas) {
+        File f = new File(this.nomeArquivoContas);
+        if(f.exists()) {
+            return;
+        }
+
         DataOutputStream out = null;
         try {
             out = new DataOutputStream(
@@ -103,15 +113,13 @@ public class PessoaController {
 
     public String[] lerPessoasDoArquivo() {
         DataInputStream in = null;
-        String pessoas[]= {"rwste"};
+        String[] pessoas = {};
         try {
             in = new DataInputStream(
                 new BufferedInputStream(
                     new FileInputStream(this.nomeArquivoContatos)
                 )
             );
-            int index = in.readInt();
-            double pi = in.readDouble();
             String s = in.readUTF();
             System.out.println(s);
         } catch (FileNotFoundException fnfe) {
