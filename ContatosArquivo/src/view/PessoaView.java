@@ -3,7 +3,8 @@ package view;
 import static java.lang.System.out;
 
 public class PessoaView {
-    public void imprimeDadosPessoa(String nome, String telefone, String endereco) {
-        out.println("Nome: " + nome + ", " + "telefone: " + telefone + " Endereço: " + endereco);
+
+    public String getDadosPessoaFormatado(String nome, String telefone, String endereco) {
+        return String.format("Nome: %s, Telefone: %s, Endereco: %s", nome, telefone, endereco);
     }
 }
