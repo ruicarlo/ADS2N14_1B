@@ -52,9 +52,13 @@ public class ContaController {
         return this.conta.getNumConta();
     }
 
+    public int getNumeroVerificacao() {
+        return this.conta.getNumVerificacao();
+    }
+
     public boolean executarComando() throws Exception {
         char comando = Character.toUpperCase(this.view.lerComando());
-        double valor = 0;
+        double valor;
 
         switch(comando) {
             case 'D':
@@ -70,11 +74,14 @@ public class ContaController {
             case 'I':
                 double taxa = view.lerTaxaInvestimento();
                 ((InvestimentoModel) this.conta).dividendos(taxa);
+                this.conta.setUltimoMovimento(this.view.getMsgDadosInvestimento(taxa));
             break;
             case 'R':
                 this.imprimirSaldo();
+                this.conta.setUltimoMovimento(null);
             break;
-            default:    
+            default:
+                this.conta.setUltimoMovimento(null);
                 return false;
         }
         return true;

@@ -14,19 +14,18 @@ public class PessoaApp {
             pessoa.armazenarPessoaNoArquivo(qtdContatos);
             
             String[] contatos = pessoa.getContatosArquivo();
-            
             ContaController[] contas = pessoa.getContaPessoas(contatos.length);
-       
             
             for(int i=0; i<contas.length;i++) {
                 try {
                     do {
+                        System.out.print(String.format("Conta: %d-%d ", contas[i].getNumeroConta()
+                                                                      , contas[i].getNumeroVerificacao()));
                         sair = contas[i].executarComando();
-                        if(sair && !contas[i].getUltimoMovimento().isEmpty()){
+                        if(contas[i].getUltimoMovimento() != null){
                             pessoa.adicionarMovimento(String.format("%d##%s##%f", contas[i].getNumeroConta(), 
                                                                                   contas[i].getUltimoMovimento(),
-                                                                                  contas[i].getSaldo())
-                            );
+                                                                                  contas[i].getSaldo()));
                         }
                     } while(sair);
                 } catch(Exception e) {

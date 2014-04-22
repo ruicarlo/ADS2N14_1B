@@ -43,7 +43,7 @@ public class ContaView {
     }
 
     public void imprimirSelecioneComando() {
-        System.out.print("Selecione um comando (D para Deposito, S para Saque, I para investimento, R para imprimir saldo, outra tecla para sair): ");
+        System.out.print("Selecione o comando (D:Deposito, S:Saque, I:Investimento, R:Saldo, outra tecla para sair): ");
     }
 
     public void imprimirDigiteValor() {
@@ -125,5 +125,9 @@ public class ContaView {
 
     public void imprimirDadosSaque(double valor) {
         System.out.println(this.getMsgDadosSaque(valor));
+    }
+
+    public String getMsgDadosInvestimento(double taxa) {
+        return String.format("Realizado Investimento com taxa de %1$,.2f", taxa);
     }
 }
