@@ -6,6 +6,15 @@ public class ContaModel {
     private double saldo = 0;
     private int    numConta;
     private int    numVerificacao;
+    private String ultimoMovimento;
+
+    public String getUltimoMovimento() {
+        return ultimoMovimento;
+    }
+
+    public void setUltimoMovimento(String ultimoMovimento) {
+        this.ultimoMovimento = ultimoMovimento;
+    }
 
     public ContaModel(int numConta, int numVerificacao) throws Exception {
         this.setNumConta(numConta);

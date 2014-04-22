@@ -1,0 +1,8 @@
+5144##Realizado Deposito de R$ 100,00##100,000000
+5144##Realizado Deposito de R$ 200,00##300,000000
+5144##Realizado Deposito de R$ 300,00##600,000000
+5144##Realizado Deposito de R$ 400,00##1000,000000
+6784##Realizado Deposito de R$ 3.000,00##3000,000000
+5144##Realizado Saque de R$ 500,00##500,000000
+6784##Realizado Saque de R$ 1.000,00##2000,000000
+5144##Realizado Deposito de R$ 1,00##501,000000

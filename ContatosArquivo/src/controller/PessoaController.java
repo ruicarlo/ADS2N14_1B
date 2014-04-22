@@ -1,22 +1,26 @@
 package controller;
 
 import java.io.*;
-import view.PessoaView;
-
+import java.util.ArrayList;
 import java.util.Random;
 
-public class PessoaController {
-    private String nomeArquivoContatos = "src/contatos.txt";
-    private String nomeArquivoContas   = "src/contas.txt";
-    private PessoaView view = new PessoaView();
-    private Random gerador = new Random();
-   
-    public String gerarCadastroAleatorio() {
-        String nomeAleatorio     = this.getNomeCompletoAleatorio();
-        String enderecoAleatorio = this.getEnderecoAleatorio();
-        String telefoneAleatorio = this.getTelefoneAleatorio();
+import view.PessoaView;
 
-        return this.view.getDadosPessoaFormatado(nomeAleatorio, telefoneAleatorio, enderecoAleatorio);
+public class PessoaController {
+    final String nomeArquivoContatos = "src/contatos.txt";
+    final String nomeArquivoContas   = "src/contas.txt";
+    final String nomeArquivoExtrato  = "src/movimentos.txt";
+    
+    final Random gerador = new Random();
+    private PessoaView view = new PessoaView();
+    private ArrayList<Integer> contasUtilizadas =  new ArrayList();
+    private ArrayList<String> movimentos = new ArrayList();
+
+    public String gerarCadastroAleatorio() {
+        String nome     = this.getNomeCompletoAleatorio();
+        String endereco = this.getEnderecoAleatorio();
+        String telefone = this.getTelefoneAleatorio();
+        return String.format("%s##%s##%s", nome, endereco, telefone);
     }
 
     private String getTelefoneAleatorio() {
@@ -45,96 +49,97 @@ public class PessoaController {
         return enderecos[aleatorio] + ", " + this.gerador.nextInt(9999);
     }
 
+    public String[] getContatosArquivo() {
+        return new ArquivosController(this.nomeArquivoContatos).getRegistros();
+    }
+
+    public String[] getContasArquivo() {
+        return new ArquivosController(this.nomeArquivoContas).getRegistros();
+    }
+
+    public void adicionarMovimento(String movimento) {
+        this.movimentos.add(movimento);
+    }
+
+    public ContaController[] getContaPessoas(int numeroContas) throws Exception {
+        ContaController[] contas = new ContaController[numeroContas];
+        ArquivosController arquivo = new ArquivosController(this.nomeArquivoContas);
+        if(arquivo.verificarSeExiste()) {
+            String[] contasArquivo = this.getContasArquivo();
+            String dados[];
+            for(int i=0; i < contasArquivo.length; i++){
+                dados = contasArquivo[i].split("##");
+                contas[i] = new ContaController(dados[2].charAt(0), Integer.parseInt(dados[0]), Integer.parseInt(dados[1]));
+                contas[i].setSaldo(Double.parseDouble(dados[3].replaceAll(",", ".")));
+            }
+            return contas;
+        }else {
+            contas = this.cadastrarContaPessoas(numeroContas);
+            this.armazenarContasNoArquivo(contas);
+            return contas;
+        }
+    }
+
+    public ContaController[] cadastrarContaPessoas(int numeroContas) throws Exception {
+        ContaController[] contas = new ContaController[numeroContas];
+
+        for (int i=0; i < numeroContas; i++) {
+            try {
+                boolean validada = false;
+                char tipoConta     = Character.toUpperCase(ContaController.getTipoContaAleatorio());
+                int numConta       = ContaController.getNumeroContaAleatorio();
+                int numVerificacao = ContaController.getNumeroVerificacaoAleatorio();
+                do {
+                    if(!this.contasUtilizadas.contains(numConta)) {
+                        this.contasUtilizadas.add(numConta);
+                        contas[i] = new ContaController(tipoConta, numConta, numVerificacao);
+                        validada = true;
+                    }
+                } while(!validada);
+            } catch(Exception e) {
+                throw new Exception (String.format("Erro ao criar contas para os contatos: %s", e.getMessage()));
+            }
+        }
+        return contas;
+    }
+
     public void armazenarPessoaNoArquivo(int numeroPessoas) {
-        File f = new File(this.nomeArquivoContatos);
-        if(f.exists()) {
+        ArquivosController arquivo = new ArquivosController(this.nomeArquivoContatos);
+        if(arquivo.verificarSeExiste()) {
             return;
         }
 
-        DataOutputStream out = null;
-        try {
-            out = new DataOutputStream(
-                new BufferedOutputStream(
-                    new FileOutputStream(this.nomeArquivoContatos)
-                )
-            );
-
-            for(int i = 0; i < numeroPessoas; i++) {
-                out.writeUTF(this.gerarCadastroAleatorio()+"\n");
-            }
-
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        String[] conteudo = new String[numeroPessoas];
+        for(int i = 0; i < numeroPessoas; i++) {
+            conteudo[i] = this.gerarCadastroAleatorio();
         }
+
+        arquivo.escrever(conteudo, true);
     }
 
-    public void armazenarContasNoArquivo(int numeroPessoas) {
-        File f = new File(this.nomeArquivoContas);
-        if(f.exists()) {
-            return;
+    public void armazenarContasNoArquivo(ContaController[] contas) {
+        ArquivosController arquivo = new ArquivosController(this.nomeArquivoContas);
+
+        String[] conteudo = new String[contas.length];
+        for(int i = 0; i < contas.length; i++) {
+            conteudo[i] = contas[i].getDadosContaParaSalvarArquivo();
         }
 
-        DataOutputStream out = null;
-        try {
-            out = new DataOutputStream(
-                new BufferedOutputStream(
-                    new FileOutputStream(this.nomeArquivoContas)
-                )
-            );
-
-            for(int i = 0; i < numeroPessoas; i++) {
-                out.writeUTF(this.gerarCadastroAleatorio()+"\n");
-            }
-
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        arquivo.escrever(conteudo, true);
     }
 
-    public String[] lerPessoasDoArquivo() {
-        DataInputStream in = null;
-        String[] pessoas = {};
-        try {
-            in = new DataInputStream(
-                new BufferedInputStream(
-                    new FileInputStream(this.nomeArquivoContatos)
-                )
-            );
-            String s = in.readUTF();
-            System.out.println(s);
-        } catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+    public void armazenarMovimentosNoArquivo() {
+        ArquivosController arquivo = new ArquivosController(this.nomeArquivoExtrato);
+
+        String[] conteudo = new String[this.movimentos.size()];        
+        for(int i = 0; i < this.movimentos.size(); i++) {
+            conteudo[i] = this.movimentos.get(i);
         }
-        return pessoas;
+
+        arquivo.escrever(conteudo, false);
+    }   
+
+    private Object ArquivosController(String nomeArquivoContatos) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

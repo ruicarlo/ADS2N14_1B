@@ -10,34 +10,31 @@ import view.ContaView;
 public class ContaController {
     private ContaModel conta;
     private ContaView  view;
-    private Random gerador = new Random();
     
-    public ContaController() throws Exception {
+    public ContaController(char tipoConta, int numConta, int numVerificacao) throws Exception {
         this.view = new ContaView();
+        this.criarConta( tipoConta, numConta, numVerificacao);
     }
-
-    public void criarContaAleatoria() throws Exception {
-        char tipoConta     = Character.toUpperCase(this.getTipoContaAleatorio());
-        int numConta       = this.getNumeroContaAleatorio();
-        int numVerificacao = this.getNumeroVerificacaoAleatorio();
-        this.criarConta(tipoConta, numConta, numVerificacao);
+    public void setSaldo(double saldo) throws Exception {
+        this.conta.setSaldo(saldo);
     }
-
-    private char getTipoContaAleatorio() {
+    public static char getTipoContaAleatorio() {
+        Random gerador = new Random();
         char tipos[] = {'E','I','N'};
-        return tipos[this.gerador.nextInt(tipos.length)];
+        return tipos[gerador.nextInt(tipos.length)];
     }
     
-    private int getNumeroContaAleatorio() {
+    public static int getNumeroContaAleatorio() {
+        Random gerador = new Random();
         return gerador.nextInt(10000-1000)+1000;
     }
 
-    private int getNumeroVerificacaoAleatorio() {
-        return this.gerador.nextInt(10);
+    public static int getNumeroVerificacaoAleatorio() {
+        Random gerador = new Random();
+        return gerador.nextInt(10);
     }
     
-    private void criarConta(char tipoConta, int numConta, int numVerificacao) throws Exception {
-        System.out.println(String.format("tipo: %s conta %d verificacao %d",tipoConta,numConta,numVerificacao));
+    public void criarConta(char tipoConta, int numConta, int numVerificacao) throws Exception {
         switch(tipoConta) {
             case 'I':
                 this.conta = new InvestimentoModel(numConta, numVerificacao);
@@ -51,21 +48,24 @@ public class ContaController {
         }
     }
 
+    public int getNumeroConta() {
+        return this.conta.getNumConta();
+    }
+
     public boolean executarComando() throws Exception {
         char comando = Character.toUpperCase(this.view.lerComando());
         double valor = 0;
-        
 
         switch(comando) {
             case 'D':
                 valor = this.view.lerValorSaqueDeposito();
                 this.depositar(valor);
-                this.view.imprimirDadosDeposito(valor);
+                this.conta.setUltimoMovimento(this.view.getMsgDadosDeposito(valor));
             break;
             case 'S':
                 valor = this.view.lerValorSaqueDeposito();
                 this.sacar(valor);
-                this.view.imprimirDadosSaque(valor);
+                this.conta.setUltimoMovimento(this.view.getMsgDadosSaque(valor));
             break;
             case 'I':
                 double taxa = view.lerTaxaInvestimento();
@@ -78,6 +78,14 @@ public class ContaController {
                 return false;
         }
         return true;
+    }
+
+    public String getUltimoMovimento() {
+        return this.conta.getUltimoMovimento();
+    }
+
+    public double getSaldo() {
+        return this.conta.getSaldo();
     }
 
     public void imprimirSaldo() {
@@ -97,6 +105,6 @@ public class ContaController {
     }
 
     public String getDadosContaParaSalvarArquivo() {
-        return String.format("%d %d %s", this.conta.getNumConta(), this.conta.getNumVerificacao(), this.conta.getTipoConta());
+        return String.format("%d##%d##%s##%f", this.conta.getNumConta(), this.conta.getNumVerificacao(), this.conta.getTipoConta(),this.conta.getSaldo());
     }
 }
