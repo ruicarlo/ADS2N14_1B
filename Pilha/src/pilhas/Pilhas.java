@@ -7,16 +7,40 @@ public class Pilhas {
 
     public static void main(String[] args) {
         imprimirPalindromo("ovo");
-        
         imprimirConversoesBinarias();
-        
-        /*
-        try{ 
-            calcularExpressaoPosFixa calc = new calcularExpressaoPosFixa();
-            calc.calcularExpressaoPosFixa("3 1 + 2 * 1 2 + /");
-        }catch(Exception e){}
-        */ 
+        imprimirInFixa();
     }
+
+    static void imprimirInFixa() {
+        InFixa calcI;
+        PosFixa calcP;
+
+        String[] a = {
+                      "3 + 4 * 2",
+                      "( 5 + 3 ) * 12 / 3",
+                      "3 - 2",
+                      "3 * 2 + 5",
+                      "( 12 - 3 ) / 3",
+                      "5 + 2 ^ 3",
+                      "3 * 2 - 11",
+                      "2 + 1 - 12 / 3",
+                      "( 6 - 3 - 3 - 3 ) ^ 2 - 11",
+                      "6 - 3 ^ 2 - 11",
+                      "128 / ( 2 + 1 ) ^ 4"
+        };
+
+        for(String b:a) {
+            calcI = new InFixa(b);
+            String convertida = calcI.converter();
+            try { 
+                calcP = new PosFixa(convertida);
+                System.out.println(String.format("A expressao "+b+"  foi convertida para "+convertida+". O resultado final da expressao eh: %1$,.2f", calcP.calcular()));
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     static void imprimirPalindromo(String texto) {
         if(testarPalindromo(texto)) {
             System.out.println(texto+" eh um palidromo");
@@ -26,7 +50,7 @@ public class Pilhas {
     }
     
     static void imprimirConversoesBinarias() {
-        int[] numerosDecimais = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 20, 500000};
+        int[] numerosDecimais = {1, 2, 3, 4, 5, 10, 16, 20, 50};
         for(int numero : numerosDecimais) {
             System.out.println(String.format("%d: %s", numero,
                                                        converterBinario(numero))

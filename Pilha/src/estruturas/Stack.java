@@ -14,7 +14,7 @@ public class Stack<T> extends Object{
     }
 
     public T peek() {
-        return this.stack[this.top];
+        return this.stack[this.top-1];
     }
 
     public void push(T item) throws StackException {
@@ -34,7 +34,7 @@ public class Stack<T> extends Object{
             throw new StackException("Stack Is Empty");
         }
         this.top--;
-        return this.peek();
+        return this.stack[this.top];
     }
 
     public boolean isEmpty() {
