@@ -70,7 +70,7 @@ public class CaminhaoTest {
     }
     
     @Test(expected = Exception.class)
-    public void descarregarFalha() throws Exception{
-        
+    public void descarregarFalha() throws Exception {
+        caminhao.descarregar();
     }
 }
