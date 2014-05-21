@@ -64,7 +64,8 @@ public class CaminhaoTest {
     }
     
     @Test
-    public void descarregar() throws Exception {
+    public void descarregarSucesso() throws Exception {
+        caminhao.abastecer();
         caminhao.descarregar();
     }
 }
