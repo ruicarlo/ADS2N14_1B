@@ -68,4 +68,9 @@ public class CaminhaoTest {
         caminhao.abastecer();
         caminhao.descarregar();
     }
+    
+    @Test(expected = Exception.class)
+    public void descarregarFalha() throws Exception{
+        
+    }
 }
