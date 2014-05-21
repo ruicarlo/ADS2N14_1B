@@ -57,4 +57,10 @@ public class CaminhaoTest {
         caminhao.abastecer();
         caminhao.andar();
     }
+
+    @Test(expected = Exception.class)
+    public void andarFalha() throws Exception {
+        caminhao.abastecer();
+        caminhao.andar();
+    }
 }
