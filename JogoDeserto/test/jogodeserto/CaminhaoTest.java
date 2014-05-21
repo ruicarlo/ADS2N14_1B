@@ -48,4 +48,9 @@ public class CaminhaoTest {
             assertEquals(true, caminhao.validarComando(comando.toUpperCase()));
         }
     }
+
+    @Test(expected = Exception.class)
+    public void comandosFalha()  throws Exception {
+
+    }
 }
