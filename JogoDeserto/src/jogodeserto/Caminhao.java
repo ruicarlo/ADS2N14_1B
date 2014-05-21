@@ -5,6 +5,7 @@ public class Caminhao {
     final String[] comandos = {"avançar","avancar", "voltar", "carregar", "descarregar"};
     
     private int qtdCombustivel = 0;
+    private int posicao = 0;
     private String comandoUsuario;
     
     public int getQtdCombustivel() {
@@ -15,8 +16,12 @@ public class Caminhao {
         this.qtdCombustivel = combustivel;
     }
 
+    public boolean verificarTanqueVazio() {
+        return this.getQtdCombustivel() == 0;
+    }
+
     public boolean verificarTanqueCheio() {
-        return this.qtdCombustivel == this.qtdMaxCombustivel;
+        return this.getQtdCombustivel() == this.qtdMaxCombustivel;
     }
     
     public void abastecer() throws Exception {
@@ -35,7 +40,7 @@ public class Caminhao {
         throw new Exception("comando invalido");
     }
 
-    private void setComandoUsuario(String comando) {
+    public void setComandoUsuario(String comando) {
         switch(comando.toLowerCase()) {
             case "avançar":
                 this.comandoUsuario = "avancar";
@@ -43,5 +48,20 @@ public class Caminhao {
             default:
                 this.comandoUsuario = comando;
         }
+    }
+    
+    public void descarregar() throws Exception {
+        if(verificarTanqueVazio()) {
+            throw new Exception("o caminhao já esta sem combustivel");
+        }
+        this.qtdCombustivel--;
+    }
+    
+    public void andar() throws Exception {
+        if(verificarTanqueVazio()) {
+            throw new Exception("o caminhao esta sem combustivel para andar");
+        }
+        this.descarregar();
+        this.posicao++;
     }
 }
