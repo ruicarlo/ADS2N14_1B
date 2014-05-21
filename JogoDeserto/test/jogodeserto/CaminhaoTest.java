@@ -1,7 +1,5 @@
 package jogodeserto;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -51,6 +49,6 @@ public class CaminhaoTest {
 
     @Test(expected = Exception.class)
     public void comandosFalha()  throws Exception {
-
+        assertEquals(true, caminhao.validarComando(anyString()));
     }
 }
