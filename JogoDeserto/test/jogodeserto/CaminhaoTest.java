@@ -4,6 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.Before;
+import static org.junit.Assert.*;
 
 import static org.mockito.Mockito.*;
 
@@ -19,13 +20,13 @@ public class CaminhaoTest {
 
     @Test
     public void getQtdCombustivel() {
-        Assert.assertEquals(caminhao.getQtdCombustivel(), anyInt());
+        assertEquals(caminhao.getQtdCombustivel(), anyInt());
     }
 
     @Test
     public void setQtdCombustivel() {
         caminhao.setQtdCombustivel(6);
-        Assert.assertEquals(6, caminhao.getQtdCombustivel());
+        assertEquals(6, caminhao.getQtdCombustivel());
     }
 
     @Test(expected = Exception.class)
@@ -37,5 +38,10 @@ public class CaminhaoTest {
     @Test
     public void abastecerSucesso() throws Exception {
         caminhao.abastecer();
+    }
+
+    @Test
+    public void comandosSucesso() {
+        assertEquals(1,2);
     }
 }
