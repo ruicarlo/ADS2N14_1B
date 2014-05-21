@@ -53,7 +53,8 @@ public class CaminhaoTest {
     }
     
     @Test
-    public void andar() {
-        assertTrue(false);
+    public void andarSucesso() throws Exception {
+        caminhao.abastecer();
+        caminhao.andar();
     }
 }
