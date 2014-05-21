@@ -41,7 +41,11 @@ public class CaminhaoTest {
     }
 
     @Test
-    public void comandosSucesso() {
-        assertEquals(1,2);
+    public void comandosSucesso()  throws Exception {
+        String[] comandos = {"avançar","avancar","voltar","carregar","descarregar"};
+        for(String comando : comandos) {
+            assertEquals(true, caminhao.validarComando(comando));
+            assertEquals(true, caminhao.validarComando(comando.toUpperCase()));
+        }
     }
 }
