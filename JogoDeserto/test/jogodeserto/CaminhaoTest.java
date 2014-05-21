@@ -60,7 +60,6 @@ public class CaminhaoTest {
 
     @Test(expected = Exception.class)
     public void andarFalha() throws Exception {
-        caminhao.abastecer();
         caminhao.andar();
     }
 }
