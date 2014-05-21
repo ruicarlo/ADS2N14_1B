@@ -51,4 +51,9 @@ public class CaminhaoTest {
     public void comandosFalha()  throws Exception {
         assertEquals(true, caminhao.validarComando(anyString()));
     }
+    
+    @Test
+    public void andar() {
+        assertTrue(false);
+    }
 }
