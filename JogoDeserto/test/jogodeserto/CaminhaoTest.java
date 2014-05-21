@@ -62,4 +62,9 @@ public class CaminhaoTest {
     public void andarFalha() throws Exception {
         caminhao.andar();
     }
+    
+    @Test
+    public void descarregar() throws Exception {
+        caminhao.descarregar();
+    }
 }
