@@ -7,31 +7,24 @@ public class Caminhao {
     private int qtdCombustivel = 0;
     private int posicao = 0;
     private String comandoUsuario;
-    
+
     public int getQtdCombustivel() {
         return qtdCombustivel;
     }
 
-    public void setQtdCombustivel(int combustivel) {
-        this.qtdCombustivel = combustivel;
+    public int getPosicao() {
+        return posicao;
     }
 
-    public boolean verificarTanqueVazio() {
+    private boolean verificarTanqueVazio() {
         return this.getQtdCombustivel() == 0;
     }
 
-    public boolean verificarTanqueCheio() {
+    private boolean verificarTanqueCheio() {
         return this.getQtdCombustivel() == this.qtdMaxCombustivel;
     }
-    
-    public void abastecer() throws Exception {
-        if(verificarTanqueCheio()) {
-            throw new Exception("o caminhao ja esta com o tanque cheio");
-        }
-        this.qtdCombustivel++;
-    }
 
-    public boolean validarComando(String comandoUsuario) throws Exception {
+    private boolean validarComando(String comandoUsuario) throws Exception {
         for(String comando : this.comandos) {
             if(comando.equalsIgnoreCase(comandoUsuario)) {
                 return true;
@@ -40,28 +33,79 @@ public class Caminhao {
         throw new Exception("comando invalido");
     }
 
-    public void setComandoUsuario(String comando) {
+    private void validarSePodeExecutarComando() throws Exception {
+        switch(this.comandoUsuario) {
+            case "avancar":
+                if(verificarTanqueVazio()) {
+                    throw new Exception("o caminhao nao tem combustivel para avancar");
+                }
+            break;
+            case "voltar":
+                if(verificarTanqueVazio()) {
+                    throw new Exception("o caminhao nao tem combustivel para voltar");
+                }
+            break;
+            case "carregar":
+                if(verificarTanqueCheio()) {
+                    throw new Exception("o caminhao ja esta com o tanque cheio");
+                } else if(this.posicao != 0) {
+                    throw new Exception("o caminhao nao pode abastecer fora do posto");
+                }
+            break;
+            case "descarregar":
+                if(verificarTanqueVazio()) {
+                    throw new Exception("o caminhao ja esta sem combustivel");
+                }
+            break;
+        }
+    }
+
+    public void setComandoUsuario(String comando) throws Exception {
+        this.validarComando(comando);
+
         switch(comando.toLowerCase()) {
             case "avançar":
+            case "avancar":
                 this.comandoUsuario = "avancar";
+                this.avancar();
             break;
-            default:
+
+            case "voltar":
                 this.comandoUsuario = comando;
+                this.voltar();
+            break;
+
+            case "carregar":
+                this.comandoUsuario = comando;
+                this.carregar();
+            break;
+
+            case "descarregar":
+                this.comandoUsuario = comando;
+                this.descarregar();
+            break;
         }
     }
     
-    public void descarregar() throws Exception {
-        if(verificarTanqueVazio()) {
-            throw new Exception("o caminhao já esta sem combustivel");
-        }
-        this.qtdCombustivel--;
-    }
-    
-    public void andar() throws Exception {
-        if(verificarTanqueVazio()) {
-            throw new Exception("o caminhao esta sem combustivel para andar");
-        }
+    private void avancar() throws Exception {
+        this.validarSePodeExecutarComando();
         this.descarregar();
         this.posicao++;
+    }
+
+    private void voltar() throws Exception {
+        this.validarSePodeExecutarComando();
+        this.descarregar();
+        this.posicao--;
+    }
+    
+    private void carregar() throws Exception {
+        this.validarSePodeExecutarComando();
+        this.qtdCombustivel++;
+    }
+    
+    private void descarregar() throws Exception {
+        this.validarSePodeExecutarComando();
+        this.qtdCombustivel--;
     }
 }

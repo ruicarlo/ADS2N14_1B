@@ -22,55 +22,58 @@ public class CaminhaoTest {
     }
 
     @Test
-    public void setQtdCombustivel() {
-        caminhao.setQtdCombustivel(6);
-        assertEquals(6, caminhao.getQtdCombustivel());
-    }
-
-    @Test(expected = Exception.class)
-    public void abastecerFalha() throws Exception {
-        caminhao.setQtdCombustivel(6);
-        caminhao.abastecer();
-    }
-
-    @Test
-    public void abastecerSucesso() throws Exception {
-        caminhao.abastecer();
-    }
-
-    @Test
-    public void comandosSucesso()  throws Exception {
-        String[] comandos = {"avançar","avancar","voltar","carregar","descarregar"};
-        for(String comando : comandos) {
-            assertEquals(true, caminhao.validarComando(comando));
-            assertEquals(true, caminhao.validarComando(comando.toUpperCase()));
-        }
+    public void getPosicao() {
+        assertEquals(caminhao.getPosicao(), anyInt());
     }
 
     @Test(expected = Exception.class)
     public void comandosFalha()  throws Exception {
-        assertEquals(true, caminhao.validarComando(anyString()));
+        caminhao.setComandoUsuario(anyString());
     }
-    
+
     @Test
-    public void andarSucesso() throws Exception {
-        caminhao.abastecer();
-        caminhao.andar();
+    public void avancarSucesso() throws Exception {
+        caminhao.setComandoUsuario("carregar"); //pra avançar o caminhao precisa ter combustivel
+        caminhao.setComandoUsuario("avancar");
     }
 
     @Test(expected = Exception.class)
-    public void andarFalha() throws Exception {
-        caminhao.andar();
+    public void avancarFalha() throws Exception {
+        caminhao.setComandoUsuario("avancar");
     }
-    
+
+    @Test(expected = Exception.class)
+    public void carregarFalhaForaDoPosto() throws Exception {
+        //como o caminhao andou nao esta no posto (posicao 0)
+        caminhao.setComandoUsuario("avancar");
+        caminhao.setComandoUsuario("carregar");
+    }
+
+    @Test(expected = Exception.class)
+    public void carregarFalhaTanqueCheio() throws Exception {
+        //nao é permitido carregar quando ja tem seis unidades de combustivel
+        caminhao.setComandoUsuario("carregar");
+        caminhao.setComandoUsuario("carregar");
+        caminhao.setComandoUsuario("carregar");
+        caminhao.setComandoUsuario("carregar");
+        caminhao.setComandoUsuario("carregar");
+        caminhao.setComandoUsuario("carregar");
+        caminhao.setComandoUsuario("carregar");
+    }
+
+    @Test
+    public void carregarSucesso() throws Exception {
+        caminhao.setComandoUsuario("carregar");
+    }
+
     @Test
     public void descarregarSucesso() throws Exception {
-        caminhao.abastecer();
-        caminhao.descarregar();
+        caminhao.setComandoUsuario("carregar"); //pra descarregar o caminhao precisa ter combustivel
+        caminhao.setComandoUsuario("descarregar");
     }
     
     @Test(expected = Exception.class)
     public void descarregarFalha() throws Exception {
-        caminhao.descarregar();
+        caminhao.setComandoUsuario("descarregar");
     }
 }
