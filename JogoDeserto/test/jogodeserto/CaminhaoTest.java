@@ -1,5 +1,8 @@
 package jogodeserto;
 
+import Exception.ForaPostoException;
+import Exception.GameOverException;
+import Exception.TanqueCheioException;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -18,7 +21,7 @@ public class CaminhaoTest {
 
     @Test
     public void getQtdCombustivel() {
-        assertEquals(caminhao.getQtdCombustivel(), anyInt());
+        assertEquals(caminhao.getQtdCombustivel(), 6);
     }
 
     @Test
@@ -28,52 +31,56 @@ public class CaminhaoTest {
 
     @Test(expected = Exception.class)
     public void comandosFalha()  throws Exception {
-        caminhao.setComandoUsuario(anyString());
+        caminhao.executarComandoUsuario(anyString());
     }
 
     @Test
     public void avancarSucesso() throws Exception {
-        caminhao.setComandoUsuario("carregar"); //pra avançar o caminhao precisa ter combustivel
-        caminhao.setComandoUsuario("avancar");
+        caminhao.executarComandoUsuario("avancar");
     }
 
-    @Test(expected = Exception.class)
-    public void avancarFalha() throws Exception {
-        caminhao.setComandoUsuario("avancar");
+    @Test(expected = GameOverException.class)
+    public void avancarFalha() throws GameOverException, Exception {
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("avancar");
     }
 
-    @Test(expected = Exception.class)
-    public void carregarFalhaForaDoPosto() throws Exception {
+    @Test(expected = ForaPostoException.class)
+    public void carregarFalhaForaDoPosto() throws ForaPostoException, Exception {
         //como o caminhao andou nao esta no posto (posicao 0)
-        caminhao.setComandoUsuario("avancar");
-        caminhao.setComandoUsuario("carregar");
+        caminhao.executarComandoUsuario("avancar");
+        caminhao.executarComandoUsuario("carregar");
     }
 
-    @Test(expected = Exception.class)
-    public void carregarFalhaTanqueCheio() throws Exception {
-        //nao é permitido carregar quando ja tem seis unidades de combustivel
-        caminhao.setComandoUsuario("carregar");
-        caminhao.setComandoUsuario("carregar");
-        caminhao.setComandoUsuario("carregar");
-        caminhao.setComandoUsuario("carregar");
-        caminhao.setComandoUsuario("carregar");
-        caminhao.setComandoUsuario("carregar");
-        caminhao.setComandoUsuario("carregar");
+    @Test(expected = TanqueCheioException.class)
+    public void carregarFalhaTanqueCheio() throws TanqueCheioException, Exception {
+        caminhao.executarComandoUsuario("carregar");
     }
 
     @Test
     public void carregarSucesso() throws Exception {
-        caminhao.setComandoUsuario("carregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("carregar");
     }
 
     @Test
     public void descarregarSucesso() throws Exception {
-        caminhao.setComandoUsuario("carregar"); //pra descarregar o caminhao precisa ter combustivel
-        caminhao.setComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
     }
     
     @Test(expected = Exception.class)
     public void descarregarFalha() throws Exception {
-        caminhao.setComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
+        caminhao.executarComandoUsuario("descarregar");
     }
 }

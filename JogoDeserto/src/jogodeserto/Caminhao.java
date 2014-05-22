@@ -1,12 +1,20 @@
 package jogodeserto;
 
+import Exception.ForaPostoException;
+import Exception.GameOverException;
+import Exception.TanqueCheioException;
+
 public class Caminhao {
     final int qtdMaxCombustivel = 6;
-    final String[] comandos = {"avançar","avancar", "voltar", "carregar", "descarregar"};
+    final String[] comandos = {"avanÃ§ar","avancar", "voltar", "carregar", "descarregar"};
     
     private int qtdCombustivel = 0;
     private int posicao = 0;
     private String comandoUsuario;
+
+    public Caminhao() {
+        this.encherTanque();
+    }
 
     public int getQtdCombustivel() {
         return qtdCombustivel;
@@ -16,12 +24,28 @@ public class Caminhao {
         return posicao;
     }
 
-    private boolean verificarTanqueVazio() {
-        return this.getQtdCombustivel() == 0;
+    private void encherTanque() {
+        this.qtdCombustivel = this.qtdMaxCombustivel;
     }
 
-    private boolean verificarTanqueCheio() {
-        return this.getQtdCombustivel() == this.qtdMaxCombustivel;
+    private void verificarTanqueVazio() throws GameOverException{
+        if (this.getQtdCombustivel() == 0)
+            throw new GameOverException();
+    }
+    private void verificarSePodeAvancarVoltar() throws GameOverException {
+        this.verificarTanqueVazio();
+    }
+
+    private void verificarTanqueCheio() throws TanqueCheioException {
+        if(this.getQtdCombustivel() == this.qtdMaxCombustivel)
+            throw new TanqueCheioException();
+        
+    }
+
+    private void verificarSePodeCarregar() throws ForaPostoException {
+        if(this.posicao != 0) {
+            throw new ForaPostoException();
+        }
     }
 
     private boolean validarComando(String comandoUsuario) throws Exception {
@@ -33,38 +57,27 @@ public class Caminhao {
         throw new Exception("comando invalido");
     }
 
-    private void validarSePodeExecutarComando() throws Exception {
+    private void validarSePodeExecutarComando() throws GameOverException, ForaPostoException, TanqueCheioException {
         switch(this.comandoUsuario) {
             case "avancar":
-                if(verificarTanqueVazio()) {
-                    throw new Exception("o caminhao nao tem combustivel para avancar");
-                }
-            break;
             case "voltar":
-                if(verificarTanqueVazio()) {
-                    throw new Exception("o caminhao nao tem combustivel para voltar");
-                }
+                this.verificarSePodeAvancarVoltar();
             break;
             case "carregar":
-                if(verificarTanqueCheio()) {
-                    throw new Exception("o caminhao ja esta com o tanque cheio");
-                } else if(this.posicao != 0) {
-                    throw new Exception("o caminhao nao pode abastecer fora do posto");
-                }
+                this.verificarTanqueCheio();
+                this.verificarSePodeCarregar();
             break;
             case "descarregar":
-                if(verificarTanqueVazio()) {
-                    throw new Exception("o caminhao ja esta sem combustivel");
-                }
+                this.verificarTanqueVazio();
             break;
         }
     }
 
-    public void setComandoUsuario(String comando) throws Exception {
+    public void executarComandoUsuario(String comando) throws Exception {
         this.validarComando(comando);
 
         switch(comando.toLowerCase()) {
-            case "avançar":
+            case "avanÃ§ar":
             case "avancar":
                 this.comandoUsuario = "avancar";
                 this.avancar();
