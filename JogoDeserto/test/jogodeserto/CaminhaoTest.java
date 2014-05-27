@@ -25,6 +25,11 @@ public class CaminhaoTest {
     }
 
     @Test
+    public void getQtdCargaCombustivel() {
+        assertEquals(caminhao.getQtdCombustivel(), 6);
+    }
+
+    @Test
     public void getPosicao() {
         assertEquals(caminhao.getPosicao(), anyInt());
     }
@@ -32,6 +37,17 @@ public class CaminhaoTest {
     @Test(expected = Exception.class)
     public void comandosFalha()  throws Exception {
         caminhao.executarComandoUsuario(anyString());
+    }
+
+    @Test
+    public void voltarSucesso() throws Exception {
+        caminhao.executarComandoUsuario("avancar");
+        caminhao.executarComandoUsuario("voltar");
+    }
+
+    @Test(expected = Exception.class)
+    public void voltarFalha() throws Exception {
+        caminhao.executarComandoUsuario("voltar");
     }
 
     @Test
@@ -48,24 +64,6 @@ public class CaminhaoTest {
         caminhao.executarComandoUsuario("descarregar");
         caminhao.executarComandoUsuario("descarregar");
         caminhao.executarComandoUsuario("avancar");
-    }
-
-    @Test(expected = ForaPostoException.class)
-    public void carregarFalhaForaDoPosto() throws ForaPostoException, Exception {
-        //como o caminhao andou nao esta no posto (posicao 0)
-        caminhao.executarComandoUsuario("avancar");
-        caminhao.executarComandoUsuario("carregar");
-    }
-
-    @Test(expected = TanqueCheioException.class)
-    public void carregarFalhaTanqueCheio() throws TanqueCheioException, Exception {
-        caminhao.executarComandoUsuario("carregar");
-    }
-
-    @Test
-    public void carregarSucesso() throws Exception {
-        caminhao.executarComandoUsuario("descarregar");
-        caminhao.executarComandoUsuario("carregar");
     }
 
     @Test

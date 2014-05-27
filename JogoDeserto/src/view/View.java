@@ -19,22 +19,7 @@ public class View {
     }
 
     public String lerComando() {
-        String comando ="";
-        boolean validado = false;
-
-        do {
-            try {
-                this.imprimirSelecioneComando();
-                comando = this.ler.next();
-                validado = true;
-            } catch(InputMismatchException e) {
-                System.out.println("Comando invalido");
-                this.setLer();
-            } catch(Exception e) {
-                System.out.println(e.getMessage());
-            }
-        } while(!validado);
-        return comando;
+        return this.ler.next();
     }
 
     public void imprimirMsgAposComando(int posicao, int combustivel) {
@@ -42,6 +27,6 @@ public class View {
     }
 
     public String getMsgAposComando(int posicao, int combustivel) {
-        return String.format("Posicao: %d. Combustivel: %d", posicao, combustivel);
+        return String.format("Posicao: %d. Combustivel: %d.", posicao, combustivel);
     }
 }

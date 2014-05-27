@@ -8,24 +8,28 @@ public class JogoDeserto {
     public static void main(String[] args) throws Exception {
         View view = new View();
         Caminhao caminhao = new Caminhao();
-        
-        view.imprimirSelecioneComando();
-        String comando = view.lerComando();
-        try {
-            caminhao.executarComandoUsuario("descarregar");
-            caminhao.executarComandoUsuario("descarregar");
-            caminhao.executarComandoUsuario("descarregar");
-            caminhao.executarComandoUsuario("descarregar");
-            caminhao.executarComandoUsuario("descarregar");
-            caminhao.executarComandoUsuario("descarregar");
-            caminhao.executarComandoUsuario(comando);
-        } catch(GameOverException goe) {
-            System.out.println(goe.getMessage());
-            System.exit(0);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-        view.imprimirMsgAposComando(caminhao.getPosicao(), caminhao.getQtdCombustivel());
-        
+        Posto posto = new Posto();
+        boolean comandoValidado = false;
+        do {
+            view.imprimirSelecioneComando();
+            String comando = view.lerComando();
+            try {
+                System.out.println(caminhao.getQtdCombustivel());
+                if(comando.equals("carregar")) {
+                    System.out.println(" eh carregar e o caminhao ta com: "+caminhao.getQtdCombustivel());
+                    posto.carregar(caminhao);
+                    System.out.println(caminhao.getQtdCombustivel());
+                }
+                System.out.println(caminhao.getQtdCombustivel());
+                caminhao.executarComandoUsuario(comando);
+                view.imprimirMsgAposComando(caminhao.getPosicao(), caminhao.getQtdCombustivel());
+                
+            } catch(GameOverException goe) {
+                System.out.println(goe.getMessage());
+                System.exit(0);
+            } catch(Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } while(!comandoValidado);
     }
 }
