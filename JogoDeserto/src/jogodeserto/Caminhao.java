@@ -1,5 +1,6 @@
 package jogodeserto;
 
+import Exception.CaminhaoJaNoPostoException;
 import Exception.ForaPostoException;
 import Exception.GameOverException;
 import Exception.TanqueCheioException;
@@ -10,16 +11,9 @@ public class Caminhao {
     
     private int qtdCombustivel;
     private int posicao = 0;
-//    private int qtdCargas = 6;
     private String comandoUsuario;
 
-    public Caminhao() {
-        this.encherTanque();
-    }
-
-//    public int getQtdCargaCombustivel() {
-//        return qtdCargas;
-//    }
+    public Caminhao() {}
 
     public void setQtdCombustivel(int qtdCombustivel) {
         this.qtdCombustivel = qtdCombustivel;
@@ -31,10 +25,6 @@ public class Caminhao {
 
     public int getPosicao() {
         return posicao;
-    }
-
-    private void encherTanque() {
-        this.qtdCombustivel = this.qtdMaxAbastecimento;
     }
 
     private void verificarTanqueVazio() throws GameOverException {
@@ -49,21 +39,9 @@ public class Caminhao {
     private void verificarSePodeVoltar() throws GameOverException, Exception {
         this.verificarTanqueVazio();
         if(this.posicao == 0) {
-            throw new Exception("Ja esta no posto");
+            throw new CaminhaoJaNoPostoException();
         }
     }
-
-//    private void verificarTanqueCheio() throws TanqueCheioException {
-//        if(this.getQtdCargaCombustivel() == this.qtdMaxAbastecimento)
-//            throw new TanqueCheioException();
-//        
-//    }
-
-//    private void verificarSeTaNoPosto() throws ForaPostoException {
-//        if(this.posicao != 0) {
-//            throw new ForaPostoException();
-//        }
-//    }
 
     private boolean validarComando(String comandoUsuario) throws Exception {
         for(String comando : this.comandos) {
@@ -82,17 +60,13 @@ public class Caminhao {
             case "voltar":
                 this.verificarSePodeVoltar();
             break;
-//            case "carregar":
-//                this.verificarTanqueCheio();
-//                this.verificarSeTaNoPosto();
-//            break;
             case "descarregar":
                 this.verificarTanqueVazio();
             break;
         }
     }
 
-    public void executarComandoUsuario(String comando) throws Exception {System.out.println("teste");
+    public void executarComandoUsuario(String comando) throws Exception {
         this.validarComando(comando);
 
         switch(comando.toLowerCase()) {
@@ -107,11 +81,6 @@ public class Caminhao {
                 this.voltar();
             break;
 
-//            case "carregar":
-//                this.comandoUsuario = comando;
-//                this.carregar();
-//            break;
-
             case "descarregar":
                 this.comandoUsuario = comando;
                 this.descarregar();
@@ -123,7 +92,6 @@ public class Caminhao {
         this.validarSePodeExecutarComando();
         this.descarregar();
         this.posicao++;
-//        this.qtdCargas = 0;
     }
 
     private void voltar() throws Exception {
@@ -131,12 +99,6 @@ public class Caminhao {
         this.descarregar();
         this.posicao--;
     }
-    
-//    private void carregar() throws Exception {
-//        this.validarSePodeExecutarComando();
-//        this.qtdCombustivel++;
-//        this.qtdCargas++;
-//    }
     
     private void descarregar() throws Exception {
         this.validarSePodeExecutarComando();

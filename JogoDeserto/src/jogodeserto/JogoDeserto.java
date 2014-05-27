@@ -6,21 +6,22 @@ import view.View;
 public class JogoDeserto {
 
     public static void main(String[] args) throws Exception {
+        JogoController jogo = new JogoController();
         View view = new View();
         Caminhao caminhao = new Caminhao();
         Posto posto = new Posto();
         boolean comandoValidado = false;
+
         do {
             view.imprimirSelecioneComando();
             String comando = view.lerComando();
             try {
-                System.out.println(caminhao.getQtdCombustivel());
                 if(comando.equals("carregar")) {
-                    System.out.println(" eh carregar e o caminhao ta com: "+caminhao.getQtdCombustivel());
+                    jogo.verificarSeTaNoPosto(caminhao.getPosicao());
                     posto.carregar(caminhao);
-                    System.out.println(caminhao.getQtdCombustivel());
+                } else if(comando.equals("avancar")){
+                    posto.zerarQtdCargaCombustivel();
                 }
-                System.out.println(caminhao.getQtdCombustivel());
                 caminhao.executarComandoUsuario(comando);
                 view.imprimirMsgAposComando(caminhao.getPosicao(), caminhao.getQtdCombustivel());
                 

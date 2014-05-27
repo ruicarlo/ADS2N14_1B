@@ -1,7 +1,6 @@
 package view;
 
 import java.util.Scanner;
-import java.util.InputMismatchException;
 
 public class View {
     Scanner ler;
