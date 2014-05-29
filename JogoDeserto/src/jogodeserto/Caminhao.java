@@ -13,10 +13,13 @@ public class Caminhao {
     private int posicao = 0;
     private String comandoUsuario;
 
-    public Caminhao() {}
+    public int getTamanhoTanque() {
+        return this.qtdMaxAbastecimento;
+    }
 
-    public void setQtdCombustivel(int qtdCombustivel) {
-        this.qtdCombustivel = qtdCombustivel;
+    public void adicionarQtdCombustivel() throws TanqueCheioException {
+        verificarTanqueCheio();
+        this.qtdCombustivel++;
     }
 
     public int getQtdCombustivel() {
@@ -25,6 +28,11 @@ public class Caminhao {
 
     public int getPosicao() {
         return posicao;
+    }
+
+    private void verificarTanqueCheio() throws TanqueCheioException {
+        if (this.getQtdCombustivel() == qtdMaxAbastecimento)
+            throw new TanqueCheioException();
     }
 
     private void verificarTanqueVazio() throws GameOverException {
@@ -37,10 +45,10 @@ public class Caminhao {
     }
 
     private void verificarSePodeVoltar() throws GameOverException, Exception {
-        this.verificarTanqueVazio();
         if(this.posicao == 0) {
             throw new CaminhaoJaNoPostoException();
         }
+        this.verificarTanqueVazio();
     }
 
     private boolean validarComando(String comandoUsuario) throws Exception {
@@ -52,7 +60,7 @@ public class Caminhao {
         throw new Exception("comando invalido");
     }
 
-    private void validarSePodeExecutarComando() throws GameOverException, ForaPostoException, TanqueCheioException, Exception {
+    private void validarSePodeExecutarComando() throws GameOverException, ForaPostoException, Exception {
         switch(this.comandoUsuario) {
             case "avancar":
                 this.verificarSePodeAvancar();

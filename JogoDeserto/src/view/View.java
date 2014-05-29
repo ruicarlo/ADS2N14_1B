@@ -18,14 +18,14 @@ public class View {
     }
 
     public String lerComando() {
-        return this.ler.next();
+        return this.ler.next().toLowerCase();
     }
 
-    public void imprimirMsgAposComando(int posicao, int combustivel) {
-        System.out.println(getMsgAposComando(posicao, combustivel));
+    public void imprimirMsgAposComando(int posicao, int combustivelTanque, int combustivelPosicao) {
+        System.out.println(getMsgAposComando(posicao, combustivelTanque, combustivelPosicao));
     }
 
-    public String getMsgAposComando(int posicao, int combustivel) {
-        return String.format("Posicao: %d. Combustivel: %d.", posicao, combustivel);
+    public String getMsgAposComando(int posicao, int combustivelTanque, int combustivelPosicao) {
+        return String.format("Posicao: %d. Combustivel no Tanque: %d. Combustivel no Tanque: %d.", posicao, combustivelTanque, combustivelPosicao);
     }
 }

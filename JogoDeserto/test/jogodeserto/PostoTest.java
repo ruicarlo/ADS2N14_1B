@@ -2,10 +2,10 @@ package jogodeserto;
 
 import Exception.TanqueCheioException;
 
-import static org.mockito.Mockito.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
 
 public class PostoTest {
     private Caminhao caminhao;
@@ -15,16 +15,9 @@ public class PostoTest {
 
     @Before
     public void setUp() {
-       this.caminhao = mock(Caminhao.class);
+       this.caminhao = new Caminhao();
        this.posto = new Posto();
     }
-
-
-//    @Test(expected = ForaPostoException.class)
-//    public void carregarFalhaForaDoPosto() throws ForaPostoException, Exception {
-//        caminhao.executarComandoUsuario("avancar");
-//        caminhao.executarComandoUsuario("carregar");
-//    }
 
     @Test(expected = TanqueCheioException.class)
     public void carregarFalhaTanqueCheio() throws TanqueCheioException, Exception {
@@ -40,5 +33,6 @@ public class PostoTest {
     @Test
     public void carregarSucesso() throws Exception {
         this.posto.carregar(this.caminhao);
+        assertEquals(1,this.caminhao.getQtdCombustivel());
     }    
 }
