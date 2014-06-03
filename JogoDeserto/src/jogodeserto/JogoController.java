@@ -11,7 +11,7 @@ public class JogoController {
     }
 
     public boolean verificaSeGanhou() {
-        return caminhao.getPosicao()==10;
+        return caminhao.getPosicao()==9;
     }
 
     public void descarregarCombustivelNaPosicao() throws Exception {
