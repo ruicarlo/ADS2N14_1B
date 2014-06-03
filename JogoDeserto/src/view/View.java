@@ -9,6 +9,10 @@ public class View {
         this.setLer();
     }
 
+    public void imprimirParabens(){
+        System.out.println("parabens");
+    }
+
     private void setLer() {
         this.ler = new Scanner(System.in);
     }

@@ -9,7 +9,7 @@ public class JogoDeserto {
         View view = new View();
         JogoController jogo = new JogoController(new Caminhao());
        
-        boolean comandoValidado = false;
+        boolean ganhou = false;
 
         do {
             view.imprimirSelecioneComando();
@@ -17,12 +17,14 @@ public class JogoDeserto {
             try {
                 jogo.jogar(comando);
                 view.imprimirMsgAposComando(jogo.getPosicaoCaminhao(), jogo.getQtdCombustivelCaminhao(), jogo.getQtdCombustivelPosicao());
+                ganhou = jogo.verificaSeGanhou();
             } catch(GameOverException goe) {
                 System.out.println(goe.getMessage());
                 System.exit(0);
             } catch(Exception e) {
                 System.out.println(e.getMessage());
             }
-        } while(!comandoValidado);
+        } while(!ganhou);
+        view.imprimirParabens();
     }
 }

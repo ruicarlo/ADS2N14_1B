@@ -9,7 +9,11 @@ public class JogoController {
     public JogoController(Caminhao caminhao) {
         this.caminhao = caminhao;
     }
-    
+
+    public boolean verificaSeGanhou() {
+        return caminhao.getPosicao()==10;
+    }
+
     public void descarregarCombustivelNaPosicao() throws Exception {
         this.caminhao.executarComandoUsuario("descarregar");
         this.combustivelPosicoes[this.caminhao.getPosicao()]++;
